@@ -23,9 +23,9 @@
         >
           Add Todo
         </button>
-        <button type="button" class="btn btn-danger float-end">
+        <!-- <button type="button" class="btn btn-danger float-end">
           Delete Todo
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -43,6 +43,8 @@
             type="checkbox"
             value=""
             aria-label="..."
+            v-model="item.done"
+            @change="UpdateTodoStatus($event, item._id, item.done)"
           />
           {{ item.todo }}
         </div>
@@ -158,6 +160,13 @@ export default {
     async EditItem(item_id) {
       let res = await axios.put(baseURL + "/update/" + item_id, {
         todo: this.update_item,
+      });
+      this.GetItems();
+      console.log(res);
+    },
+    async UpdateTodoStatus(e, id, status) {
+      const res = await axios.put(baseURL + "/update/status/" + id, {
+        status: status,
       });
       this.GetItems();
       console.log(res);

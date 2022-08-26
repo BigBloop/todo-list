@@ -29,6 +29,18 @@ const updateTodo = async (req, res) => {
   res.status(200).json(updated_todo);
 };
 
+const updateTodoStatus = async (req, res) => {
+  const { status } = req.body;
+  const todo_item = await Todo.findById(req.params.id);
+  if (!todo_item)
+    return res.status(200).json({ message: "Todo doesn't exist" });
+  const updated_todo = await Todo.findOneAndUpdate(
+    { _id: req.params.id },
+    { done: status }
+  );
+  res.status(200).json(updated_todo);
+};
+
 // GET REQUESTS
 const getAllTodos = async (_, res) => {
   const todos = await Todo.find({});
@@ -51,8 +63,9 @@ const deleteTodo = async (req, res) => {
 
 module.exports = {
   addTodo,
-  updateTodo,
   getAllTodos,
   getTodo,
+  updateTodo,
+  updateTodoStatus,
   deleteTodo,
 };

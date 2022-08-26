@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const {
   addTodo,
-  updateTodo,
   getAllTodos,
   getTodo,
+  updateTodo,
+  updateTodoStatus,
   deleteTodo,
 } = require("../controllers/todoController");
 
@@ -13,6 +14,7 @@ router.post("/add", addTodo);
 
 // PUT REQUEST
 router.put("/update/:id", updateTodo);
+router.put("/update/status/:id", updateTodoStatus);
 
 // GET REQUESTS
 router.get("/", getAllTodos);
