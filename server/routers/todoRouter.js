@@ -10,7 +10,9 @@ const {
 
 // POST REQUESTS
 router.post("/add", addTodo);
-router.post("/update/:id", updateTodo);
+
+// PUT REQUEST
+router.put("/update/:id", updateTodo);
 
 // GET REQUESTS
 router.get("/", getAllTodos);

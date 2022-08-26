@@ -27,14 +27,11 @@
     </div>
 
     <!-- list body -->
-    <ul
-      class="list-group"
-      style="min-width: 100%"
-      v-for="(item, i) in items"
-      :key="item._id"
-    >
+    <ul class="list-group" style="min-width: 100%">
       <!-- list item -->
       <li
+        v-for="item in items"
+        :key="item._id"
         class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2"
       >
         <div class="d-flex align-items-center">
@@ -44,7 +41,7 @@
             value=""
             aria-label="..."
           />
-          {{ items[i].todo }}
+          {{ item.todo }}
         </div>
 
         <div class="d-flex justify-content-between gap-3">
@@ -54,7 +51,7 @@
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
-            @click="update_item = items[i].todo"
+            @click="InitModal(item.todo, item._id)"
           >
             Edit Task
           </button>
@@ -103,7 +100,7 @@
                     type="button"
                     class="btn btn-primary"
                     data-bs-dismiss="modal"
-                    @click="EditItem(items[i]._id)"
+                    @click="EditItem(update_item_id)"
                   >
                     Commit Changes
                   </button>
@@ -114,7 +111,7 @@
 
           <!-- remove item -->
           <!-- <div class="modal-dialog modal-dialog-centered"> -->
-          <button type="button" @click="DeleteItem(items[i]._id, i)">
+          <button type="button" @click="DeleteItem(item._id)">
             <i class="fas fa-times text-primary"></i>
           </button>
         </div>
@@ -132,6 +129,7 @@ export default {
       item: "",
       items: [],
       update_item: "",
+      update_item_id: "",
     };
   },
   async mounted() {
@@ -153,7 +151,7 @@ export default {
       this.GetItems();
     },
     async EditItem(item_id) {
-      let res = await axios.post(baseURL + "/update/" + item_id, {
+      let res = await axios.put(baseURL + "/update/" + item_id, {
         todo: this.update_item,
       });
       this.GetItems();
@@ -163,6 +161,10 @@ export default {
       let res = await axios.delete(baseURL + "/delete/" + item_id);
       this.GetItems();
       console.log(res);
+    },
+    InitModal(todo, id) {
+      this.update_item = todo;
+      this.update_item_id = id;
     },
   },
 };

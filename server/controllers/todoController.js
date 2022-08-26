@@ -16,9 +16,12 @@ const addTodo = async (req, res) => {
   });
 };
 
+// PUT REQUEST
 const updateTodo = async (req, res) => {
   const { todo } = req.body;
-  if (!todo) return res.status(200).json({ message: "Todo doesn't exist" });
+  const todo_item = await Todo.findById(req.params.id);
+  if (!todo_item)
+    return res.status(200).json({ message: "Todo doesn't exist" });
   const updated_todo = await Todo.findOneAndUpdate(
     { _id: req.params.id },
     { todo }
