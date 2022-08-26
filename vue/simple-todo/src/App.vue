@@ -3,8 +3,8 @@
     class="container d-flex align-items-center justify-content-center flex-column"
     style="min-height: 100vh"
   >
-    <h1>TODO LIST APP</h1>
-    <a>powered by CodeArmy.dev</a>
+    <h1>MESSENGER 2.0</h1>
+    <a>powered by kape and tinapay</a>
     <!-- input section -->
     <div class="container m-2">
       <input
@@ -14,19 +14,14 @@
         placeholder="Add todo"
         aria-label="default input example"
       />
-      <div class="clearfix mx-5 my-2">
-        <button
-          type="button"
-          class="btn btn-success float-start"
-          :disabled="addTodoDisabled"
-          @click="AddItem()"
-        >
-          Add Todo
-        </button>
-        <!-- <button type="button" class="btn btn-danger float-end">
-          Delete Todo
-        </button> -->
-      </div>
+      <button
+        type="button"
+        class="btn btn-success my-2"
+        :disabled="addTodoDisabled"
+        @click="AddItem()"
+      >
+        Add Todo
+      </button>
     </div>
 
     <!-- list body -->
@@ -117,7 +112,7 @@
 
           <!-- remove item -->
           <!-- <div class="modal-dialog modal-dialog-centered"> -->
-          <button type="button" @click="DeleteItem(item._id)">
+          <button type="button" @click="DeleteItem(item._id)" class="btn">
             <i class="fas fa-times text-primary"></i>
           </button>
         </div>
