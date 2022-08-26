@@ -54,6 +54,7 @@
             class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
+            @click="update_item = items[i].todo"
           >
             Edit Task
           </button>
