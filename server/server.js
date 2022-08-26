@@ -6,20 +6,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // connect to MongoDB Atlas DB
-// const connectMongoDB = async () => {
-//   try {
-//     const connection = await mongoose.connect(process.env.MONGODB_URI);
+const connectMongoDB = async () => {
+  try {
+    const connection = await mongoose.connect(
+      "mongodb+srv://todo:todopassword@cluster0.obkz7rj.mongodb.net/?retryWrites=true&w=majority"
+    );
 
-//     console.log(
-//       `Successfully Connected to MongoDB Atlas Database: ${connection.connection.host}`
-//     );
-//   } catch (error) {
-//     console.log(error);
-//     process.exit(1);
-//   }
-// };
+    console.log(
+      `Successfully Connected to MongoDB Atlas Dadtabase: ${connection.connection.host}`
+    );
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+};
 
-// connectMongoDB();
+connectMongoDB();
 
 // use middlewares
 app.use(express.json());

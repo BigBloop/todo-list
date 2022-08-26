@@ -13,8 +13,8 @@ router.post("/add", addTodo);
 router.post("/update/:id", updateTodo);
 
 // GET REQUESTS
-router.get("/todos", getAllTodos);
-router.get("/todos/:id", getTodo);
+router.get("/", getAllTodos);
+router.get("/:id", getTodo);
 
 // DELETE REQUESTS
 router.delete("/delete/:id", deleteTodo);

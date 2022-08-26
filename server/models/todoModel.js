@@ -6,9 +6,6 @@ const todoSchema = mongoose.Schema(
       type: String,
       required: [true, "Todo is required."],
     },
-    todo_desc: {
-      type: String,
-    },
   },
   {
     timestamps: true,
