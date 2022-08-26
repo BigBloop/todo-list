@@ -20,8 +20,8 @@
         >
           Create Entry
         </button>
-        <button type="button" class="btn btn-danger float-end" >
-          Delete Entry 
+        <button type="button" class="btn btn-danger float-end">
+          Delete Entry
         </button>
       </div>
     </div>
@@ -44,7 +44,7 @@
             value=""
             aria-label="..."
           />
-          {{items[i].todo}}
+          {{ items[i].todo }}
         </div>
 
         <div class="d-flex justify-content-between gap-3">
@@ -79,12 +79,11 @@
                     class="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
-                   
                   ></button>
                 </div>
                 <div class="modal-body">
                   <input
-                    v-model = "update_item"
+                    v-model="update_item"
                     class="form-control"
                     type="text"
                     placeholder="create entry"
@@ -99,8 +98,11 @@
                   >
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary"
-                   @click="EditItem(items[i]._id)"
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-dismiss="modal"
+                    @click="EditItem(items[i]._id)"
                   >
                     Commit Changes
                   </button>
@@ -111,9 +113,9 @@
 
           <!-- remove item -->
           <!-- <div class="modal-dialog modal-dialog-centered"> -->
-            <button type="button" @click="DeleteItem(items[i]._id, i)">
-              <i class="fas fa-times text-primary"></i></button>
-        
+          <button type="button" @click="DeleteItem(items[i]._id, i)">
+            <i class="fas fa-times text-primary"></i>
+          </button>
         </div>
       </li>
     </ul>
@@ -128,30 +130,37 @@ export default {
     return {
       item: "",
       items: [],
-      update_item: ""
+      update_item: "",
     };
   },
   async mounted() {
-    const response = await axios.get(baseURL + "/");
-    this.items = response.data;
+    this.GetItems();
     console.log(this.items);
   },
   methods: {
-    async AddItem() {
-      let res = await axios.post(baseURL + "/add/", {todo: this.item} );
+    async GetItems() {
+      const response = await axios.get(baseURL + "/");
+      this.items = response.data;
+    },
+    async GetItem(item_id) {
+      let res = await axios.get(baseURL + "/" + item_id);
       console.log(res);
     },
-    async DeleteItem(item_id, index) {
-      let res = await axios.delete(baseURL + "/delete/" + item_id );
+    async AddItem() {
+      let res = await axios.post(baseURL + "/add/", { todo: this.item });
       console.log(res);
+      this.GetItems();
     },
     async EditItem(item_id) {
-      let res = await axios.post(baseURL + "/update/" + item_id, {todo: this.update_item} );
+      let res = await axios.post(baseURL + "/update/" + item_id, {
+        todo: this.update_item,
+      });
+      this.GetItems();
       console.log(res);
     },
-
-    async GetItem(item_id) {
-      let res = await axios.get( baseURL + "/" + item_id );
+    async DeleteItem(item_id) {
+      let res = await axios.delete(baseURL + "/delete/" + item_id);
+      this.GetItems();
       console.log(res);
     },
   },
