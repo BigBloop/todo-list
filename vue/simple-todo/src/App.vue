@@ -3,25 +3,28 @@
     class="container d-flex align-items-center justify-content-center flex-column"
     style="min-height: 100vh"
   >
+    <h1>TODO LIST APP</h1>
+    <a>powered by CodeArmy.dev</a>
     <!-- input section -->
     <div class="container m-2">
       <input
         v-model="item"
         class="form-control"
         type="text"
-        placeholder="create entry"
+        placeholder="Add todo"
         aria-label="default input example"
       />
       <div class="clearfix mx-5 my-2">
         <button
           type="button"
           class="btn btn-success float-start"
+          :disabled="addTodoDisabled"
           @click="AddItem()"
         >
-          Create Entry
+          Add Todo
         </button>
         <button type="button" class="btn btn-danger float-end">
-          Delete Entry
+          Delete Todo
         </button>
       </div>
     </div>
@@ -53,7 +56,7 @@
             data-bs-target="#staticBackdrop"
             @click="InitModal(item.todo, item._id)"
           >
-            Edit Task
+            Edit Todo
           </button>
 
           <!-- Modal -->
@@ -70,7 +73,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="staticBackdropLabel">
-                    Edit Task
+                    Edit Todo
                   </h5>
                   <button
                     type="button"
@@ -100,6 +103,7 @@
                     type="button"
                     class="btn btn-primary"
                     data-bs-dismiss="modal"
+                    :disabled="editTodoDisabled"
                     @click="EditItem(update_item_id)"
                   >
                     Commit Changes
@@ -149,6 +153,7 @@ export default {
       let res = await axios.post(baseURL + "/add/", { todo: this.item });
       console.log(res);
       this.GetItems();
+      this.item = "";
     },
     async EditItem(item_id) {
       let res = await axios.put(baseURL + "/update/" + item_id, {
@@ -165,6 +170,14 @@ export default {
     InitModal(todo, id) {
       this.update_item = todo;
       this.update_item_id = id;
+    },
+  },
+  computed: {
+    addTodoDisabled() {
+      return this.item.length === 0;
+    },
+    editTodoDisabled() {
+      return this.update_item.length === 0;
     },
   },
 };
