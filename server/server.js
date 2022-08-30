@@ -1,7 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const mongoose = require("mongoose");
-var cors = require('cors');
+const cors = require('cors');
+const path = require('path');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +27,7 @@ const connectMongoDB = async () => {
 connectMongoDB();
 
 // use middlewares
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());

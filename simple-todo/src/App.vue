@@ -128,7 +128,7 @@
 
 <script>
 import axios from "axios";
-let baseURL = "http://localhost:3000/api/todo";
+let baseURL = `/api/todo/`;
 export default {
   data() {
     return {
@@ -144,35 +144,35 @@ export default {
   },
   methods: {
     async GetItems() {
-      const response = await axios.get(baseURL + "/");
+      const response = await axios.get(baseURL);
       this.items = response.data;
     },
     async GetItem(item_id) {
-      let res = await axios.get(baseURL + "/" + item_id);
+      let res = await axios.get(baseURL + item_id);
       console.log(res);
     },
     async AddItem() {
-      let res = await axios.post(baseURL + "/add/", { todo: this.item });
+      let res = await axios.post(baseURL + "add/", { todo: this.item });
       console.log(res);
       this.GetItems();
       this.item = "";
     },
     async EditItem(item_id) {
-      let res = await axios.put(baseURL + "/update/" + item_id, {
+      let res = await axios.put(baseURL + "update/" + item_id, {
         todo: this.update_item,
       });
       this.GetItems();
       console.log(res);
     },
     async UpdateTodoStatus(e, id, status) {
-      const res = await axios.put(baseURL + "/update/status/" + id, {
+      const res = await axios.put(baseURL + "update/status/" + id, {
         status: status,
       });
       this.GetItems();
       console.log(res);
     },
     async DeleteItem(item_id) {
-      let res = await axios.delete(baseURL + "/delete/" + item_id);
+      let res = await axios.delete(baseURL + "delete/" + item_id);
       this.GetItems();
       console.log(res);
     },
